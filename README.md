@@ -16,9 +16,13 @@ To interact with a bot send a direct message to it.
 `help` command will display the instructions:
 
 `bet <MATCH> <SCORE>` - adds a bet, e.g. GER-FRA 2:0 ( \"-\" and \":\" are required)
+
 `matches` - list of betable matches (next 10 matches), you can bet up to 15 min before the start of the match
+
 `today` - list of today's matches
+
 `top [NUMBER]` - current scores, shows top 10 users by default, pass a number to show more
+
 `coupons [MATCH]` - list of your bets (with no arguments) or a list of coupons for a betable match, e.g. coupons POL-GER
 
 ## Notes
