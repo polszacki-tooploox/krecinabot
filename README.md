@@ -26,3 +26,6 @@ The bot was written for fun, sorry for the quality of the code. It probably does
 
 ## License
 
+MIT
+
+Please see the [project license](LICENSE.md) for further details.
