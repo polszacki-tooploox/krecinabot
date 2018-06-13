@@ -26,7 +26,7 @@ To interact with a bot send a direct message to it.
 `coupons [MATCH]` - list of your bets (with no arguments) or a list of coupons for a betable match, e.g. coupons POL-GER
 
 ## Notes
-The bot was written for fun, sorry for the quality of the code. It probably doesnt' look good as I'm not a javascript developer.
+The bot was written for fun, sorry for the quality of the code. It probably doesn't look good as I'm not a javascript developer.
 
 ## License
 
