@@ -96,6 +96,8 @@ function handleMessage(user, text, channel) {
         return
     }
 
+    text = text.toLowerCase()
+
     if (text.includes(betKey)) {
         betAfterFetchingUser(user, text, channel)
     } else if (text.includes(matchesKey)) {
@@ -192,7 +194,7 @@ function listBetableMatches(channel) {
         for (var i = 0, len = matches.length; i < len; i++) {
             let match = matches[i]
             if (match.homeResult) {
-                message += `\n>${match.homeTeamFlag} ${match.homeTeamCode} ${match.homeResult} - ${match.awayResult} ${match.awayTeamCode} ${match.awayTeamFlag}    on ${new Date(match.matchDate).toDateString()}`
+                message += `\n>${match.homeTeamFlag} ${match.homeTeamCode} ${match.homeResult} - ${match.awayResult} ${match.awayTeamCode} ${match.awayTeamFlag}  ${new Date(match.matchDate).toDateString()} - ${new Date(match.matchDate).toLocaleTimeString('pl-PL', { timeZone: 'Europe/Warsaw' })}`
             } else {
                 message += `\n>${match.homeTeamFlag} ${match.homeTeamCode} - ${match.awayTeamCode} ${match.awayTeamFlag}    ${new Date(match.matchDate).toDateString()} - ${new Date(match.matchDate).toLocaleTimeString('pl-PL', { timeZone: 'Europe/Warsaw' })}`
             }
@@ -213,9 +215,9 @@ function listTodayMatches(channel) {
         for (var i = 0, len = matches.length; i < len; i++) {
             let match = matches[i]
             if (match.homeResult) {
-                message += `\n>${match.homeTeamFlag} ${match.homeCode} ${match.homeResult} - ${match.awayResult} ${match.awayCode} ${match.awayTeamFlag}`
+                message += `\n>${match.homeTeamFlag} ${match.homeCode} ${match.homeResult} - ${match.awayResult} ${match.awayCode} ${match.awayTeamFlag}   o godz. ${new Date(match.matchDate).toLocaleTimeString('pl-PL', { timeZone: 'Europe/Warsaw' })}`
             } else {
-                message += `\n>${match.homeTeamFlag} ${match.homeCode} - ${match.awayCode} ${match.awayTeamFlag}`
+                message += `\n>${match.homeTeamFlag} ${match.homeCode} - ${match.awayCode} ${match.awayTeamFlag}    ${new Date(match.matchDate).toLocaleTimeString('pl-PL', { timeZone: 'Europe/Warsaw' })}`
             }
         }
         sendMessage(message, channel)
@@ -280,7 +282,19 @@ function listUsersCoupons(user, channel) {
 
         for (var i = 0, len = bets.length; i < len; i++) {
             let bet = bets[i]
-            message += `\n>${bet.homeFlag} ${bet.homeCode} ${bet.homeResult} - ${bet.awayResult} ${bet.awayCode} ${bet.awayFlag}`
+
+            var points = 0
+            if (bet.homeResult == bet.finalHomeResult && bet.awayResult == bet.finalAwayResult && bet.winner == bet.finalWinner) {
+              points = maxPoints
+            } else if (bet.winner == bet.finalWinner) {
+              points = minPoints
+            }
+
+            if (bet.finished) {
+              message += `\n>${bet.homeFlag} ${bet.homeCode} ${bet.homeResult} - ${bet.awayResult} ${bet.awayCode} ${bet.awayFlag}  -  ${points} pts (końcowy wynik ${bet.finalHomeResult}:${bet.finalAwayResult})`
+            } else {
+              message += `\n>${bet.homeFlag} ${bet.homeCode} ${bet.homeResult} - ${bet.awayResult} ${bet.awayCode} ${bet.awayFlag}`
+            }
         }
         sendMessage(message, channel)
     });

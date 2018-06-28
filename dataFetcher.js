@@ -71,7 +71,13 @@ function parseMatches(json, callback) {
         mappedMatch.homePenalty = match.home_penalty
         mappedMatch.awayPenalty = match.awayPenalty
         mappedMatch.matchDate = new Date(match.date)
-        mappedMatch.winner = match.winner
+        var winner = "home"
+        if (match.home_result < match.away_result) {
+          winner = "away"
+        } else if (match.home_result == match.away_result){
+          winner = null
+        }
+        mappedMatch.winner = winner
         mappedMatch.finished = match.finished
 
         database.upsertMatch(mappedMatch, function() {
